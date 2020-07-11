@@ -5,15 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Moss</title>
+      <meta name="twitter:card" content="Summary Card" /> 
+<meta name="twitter:site" content="@forestpopoon" /> 
+<meta property="og:url" content={{ url }} /> 
+<meta property="og:title" content="Moss" /> 
+<meta property="og:description" content="TwichとMildomの配信リストを同時に見ることができます" />
+<meta property="og:image" content={{ assetsUrl("/twittercard128x128.png") }} />
+    <link rel="icon" type="image/png" href={{ assetsUrl("/favicon-16x16.ico") }} sizes="16x16" />
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body class="bg-gray-900">
     <header class="px-16 py-8">
         <div class="bg-gray-700 shadow-sm h-16 rounded">
-          <div class="flex px-10">
-            <h1 class="text-xl text-white py-4"> <a href="/">Moss</a></h1> <a class="text-xl text-white px-5 py-4">/</a>
-            <h2 class="text-base text-white py-5">Twich & Mildom</h2>
+          <div class="flex px-5">
+            <h1 class="text-2xl text-white py-3 flex"> <a href="/"><img class="pr-5 py-1" src={{ assetsUrl("/logoicon.png") }} alt="#"></a>Moss</h1> <a class="text-xl text-white px-5 py-4">/</a>
+            <h2 class="text-lg text-white pt-5">Twich & Mildom</h2>
           </div>
         </div>
     </header>
