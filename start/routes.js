@@ -18,4 +18,5 @@ const Route = use('Route')
 
 Route.get("/","ScrapeController.index")
 Route.get("/content/:id","ScrapeController.showcontent")
+Route.get("/opgg/:id","LolopggplusController.showLadder")
 Route.any('*',"ScrapeController.index")
