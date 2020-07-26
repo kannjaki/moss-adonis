@@ -1,229 +1,316 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-172467115-1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-  
-    gtag('config', 'UA-172467115-1');
-  </script>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Moss | OPGG</title>
-　<meta name="twitter:card" content="summary" /> 
-  <meta name="twitter:site" content="@forestpopoon" />
-  <meta property="og:url" content={{ "https://moss-adonis.herokuapp.com"+request.url() }} />
-  <meta property="og:title" content="Moss" />
-  <meta property="og:description" content="League of Legendsというゲームタイトルのデータを分析したサイトです。" />
-  <meta property="og:image" content={{ "https://moss-adonis.herokuapp.com"+assetsUrl( "/twittercard128x128.png") }} />
-  <link rel="icon" type="image/png" href={{ assetsUrl( "/favicon-16x16.ico") }} sizes="16x16" />
-  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> </head>
-<body class="bg-gray-900">
-  <header class="px-16 py-8">
-    <div class="bg-gray-700 shadow-sm h-16 rounded flex-wrap ">
-      <div class="flex px-5">
-        <a href="/">
-          <h1 class="text-2xl text-white py-3 flex"> <img class="pr-5 py-1" src={{ assetsUrl( "/logoicon.png") }} alt="#"> Moss </h1>
-        </a> <a class="text-xl text-white px-5 py-4">/</a>
-        <h2 class="text-lg text-white pt-5">OPGG</h2> <a class="text-xl text-white px-5 py-4">/</a> <a href="/opgg/JP1" class="text-lg text-white pt-5">Japan</a> <a class="text-xl text-white px-5 py-4">-</a> <a href="/opgg/KR" class="text-lg text-white pt-5">Korea</a> <a class="text-xl text-white px-5 py-4">-</a> <a href="/opgg/NA1" class="text-lg text-white pt-5">North America</a> </div>
-    </div>
-    </div>
-  </header>
-  <div class="px-16">
-    <div class="flex flex-wrap" id="tabs-id">
-      <div class="w-full">
-        <ul class="flex mb-0 list-none flex-wrap pt-3 pb-2 flex-row">
-          <li class="flex-auto text-center"> <a class="text-xs font-bold px-5 py-3 shadow-lg rounded block text-white bg-teal-500 text-2xl mr-4 cursor-pointer" onclick="changeAtiveTab(event,'tab-all')">
-                       All
-                    </a> </li>
-          <li class="flex-auto text-center"> <a class="text-xs font-bold px-5 py-3 shadow-lg rounded block text-white bg-teal-900 text-2xl mr-4 cursor-pointer" onclick="changeAtiveTab(event,'tab-top')">
-                     Top
-                  </a> </li>
-          <li class="flex-auto text-center"> <a class="text-xs font-bold px-5 py-3 shadow-lg rounded block text-white bg-teal-900 text-2xl mr-4 cursor-pointer" onclick="changeAtiveTab(event,'tab-jungle')">
-                       Jungle
-                    </a> </li>
-          <li class="flex-auto text-center"> <a class="text-xs font-bold px-5 py-3 shadow-lg rounded block text-white bg-teal-900 text-2xl mr-4 cursor-pointer" onclick="changeAtiveTab(event,'tab-middle')">
-                       Middle
-                    </a> </li>
-          <li class="flex-auto text-center"> <a class="text-xs font-bold px-5 py-3 shadow-lg rounded block text-white bg-teal-900 text-2xl mr-4 cursor-pointer" onclick="changeAtiveTab(event,'tab-bottom')">
-                       Bottom
-                    </a> </li>
-          <li class="flex-auto text-center"> <a class="text-xs font-bold px-5 py-3 shadow-lg rounded block text-white bg-teal-900 text-2xl cursor-pointer" onclick="changeAtiveTab(event,'tab-support')">
-                       Support
-                    </a> </li>
-        </ul>
-        <div class="relative flex flex-col min-w-0 break-words w-full mb-6 rounded px-64">
-          <div class="px-3 pr-16">
-            <div class="tab-content tab-space">
-              <div class="block" id="tab-all"> @set("count",1) @each(player in LadderAll)
-                <a href={{opggurl+player.name.split( ' ').join( '+')}} target="_blank">
-                  <div class="pt-6">
-                    <div class="h-24 py-4 bg-gray-700  flex rounded cursor-pointer">
-                      <div class="ml-10 pt-3 text-2xl text-white w-12"> {{count}} </div> @if(player.tier == "Challenger")
-                      <div class="rounded-full h-16 w-16 items-center justify-center bg-yellow-500">
-                        <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{ "http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+ ".png"}} alt=""> </div>
-                      </div> @endif @if(player.tier == "Grandmaster")
-                      <div class="rounded-full h-16 w-16 items-center justify-center bg-pink-600">
-                        <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{ "http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+ ".png"}} alt=""> </div>
-                      </div> @endif @if(player.tier == "Master")
-                      <div class="rounded-full h-16 w-16 items-center justify-center bg-purple-500">
-                        <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{ "http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+ ".png"}} alt=""> </div>
-                      </div> @endif
-                      <div class="pt-2 pl-8 text-2xl text-white w-1/4 truncate"> {{player.name}} </div>
-                      <div class="ml-10 pt-4 text-lg text-white w-24"> {{player.lore}} </div>
-                      <div class="ml-8 pt-4 text-lg text-white w-32"> {{player.leaguePoints+" LP"}} </div>
-                      <div class="pt-4 text-lg text-white w-5 pt-2">W</div>
-                      <div class="ml-4 pt-4 text-lg text-white w-12 pt-2">{{player.wins}}</div>
-                      <div class="ml-6 pt-4 text-lg text-white w-5 pt-2">L</div>
-                      <div class="ml-4 pt-4 text-lg text-white w-12 pt-2">{{player.losses}}</div>
-                      <div class="ml-6 pt-4 text-lg text-white w-20 pt-2">WinRate</div>
-                      <div class="ml-4 pt-4 text-lg text-white w-8 pt-2">{{player.winrate}}</div>
-                      <div class="pt-4 text-lg text-white w-5 pt-2">%</div>
-                    </div>
-                  </div> @set("count",count+1) </a> @endeach </div>
-              <div class="hidden" id="tab-top"> @set("count",1) @each(player in LadderTop)
-                <a href={{opggurl+player.name.split( ' ').join( '+')}} target="_blank">
-                  <div class="pt-6">
-                    <div class="h-24 py-4 bg-gray-700  flex rounded cursor-pointer">
-                      <div class="ml-10 pt-3 text-2xl text-white w-12"> {{count}} </div> @if(player.tier == "Challenger")
-                      <div class="rounded-full h-16 w-16 items-center justify-center bg-yellow-500">
-                        <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{ "http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+ ".png"}} alt=""> </div>
-                      </div> @endif @if(player.tier == "Grandmaster")
-                      <div class="rounded-full h-16 w-16 items-center justify-center bg-pink-600">
-                        <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{ "http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+ ".png"}} alt=""> </div>
-                      </div> @endif @if(player.tier == "Master")
-                      <div class="rounded-full h-16 w-16 items-center justify-center bg-purple-500">
-                        <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{ "http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+ ".png"}} alt=""> </div>
-                      </div> @endif
-                      <div class="pt-2 pl-8 text-2xl text-white w-1/4 truncate"> {{player.name}} </div>
-                      <div class="ml-10 pt-4 text-lg text-white w-24"> {{player.lore}} </div>
-                      <div class="ml-8 pt-4 text-lg text-white w-32"> {{player.leaguePoints+" LP"}} </div>
-                      <div class="pt-4 text-lg text-white w-5 pt-2">W</div>
-                      <div class="ml-4 pt-4 text-lg text-white w-12 pt-2">{{player.wins}}</div>
-                      <div class="ml-6 pt-4 text-lg text-white w-5 pt-2">L</div>
-                      <div class="ml-4 pt-4 text-lg text-white w-12 pt-2">{{player.losses}}</div>
-                      <div class="ml-6 pt-4 text-lg text-white w-20 pt-2">WinRate</div>
-                      <div class="ml-4 pt-4 text-lg text-white w-8 pt-2">{{player.winrate}}</div>
-                      <div class="pt-4 text-lg text-white w-5 pt-2">%</div>
-                    </div>
-                  </div> @set("count",count+1) </a> @endeach </div>
-              <div class="hidden" id="tab-jungle"> @set("count",1) @each(player in LadderJungle)
-                <a href={{opggurl+player.name.split( ' ').join( '+')}} target="_blank">
-                  <div class="pt-6">
-                    <div class="h-24 py-4 bg-gray-700  flex rounded cursor-pointer">
-                      <div class="ml-10 pt-3 text-2xl text-white w-12"> {{count}} </div> @if(player.tier == "Challenger")
-                      <div class="rounded-full h-16 w-16 items-center justify-center bg-yellow-500">
-                        <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{ "http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+ ".png"}} alt=""> </div>
-                      </div> @endif @if(player.tier == "Grandmaster")
-                      <div class="rounded-full h-16 w-16 items-center justify-center bg-pink-600">
-                        <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{ "http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+ ".png"}} alt=""> </div>
-                      </div> @endif @if(player.tier == "Master")
-                      <div class="rounded-full h-16 w-16 items-center justify-center bg-purple-500">
-                        <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{ "http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+ ".png"}} alt=""> </div>
-                      </div> @endif
-                      <div class="pt-2 pl-8 text-2xl text-white w-1/4 truncate"> {{player.name}} </div>
-                      <div class="ml-10 pt-4 text-lg text-white w-24"> {{player.lore}} </div>
-                      <div class="ml-8 pt-4 text-lg text-white w-32"> {{player.leaguePoints+" LP"}} </div>
-                      <div class="pt-4 text-lg text-white w-5 pt-2">W</div>
-                      <div class="ml-4 pt-4 text-lg text-white w-12 pt-2">{{player.wins}}</div>
-                      <div class="ml-6 pt-4 text-lg text-white w-5 pt-2">L</div>
-                      <div class="ml-4 pt-4 text-lg text-white w-12 pt-2">{{player.losses}}</div>
-                      <div class="ml-6 pt-4 text-lg text-white w-20 pt-2">WinRate</div>
-                      <div class="ml-4 pt-4 text-lg text-white w-8 pt-2">{{player.winrate}}</div>
-                      <div class="pt-4 text-lg text-white w-5 pt-2">%</div>
-                    </div>
-                  </div> @set("count",count+1) </a> @endeach </div>
-              <div class="hidden" id="tab-middle"> @set("count",1) @each(player in LadderMid)
-                <a href={{opggurl+player.name.split( ' ').join( '+')}} target="_blank">
-                  <div class="pt-6">
-                    <div class="h-24 py-4 bg-gray-700  flex rounded cursor-pointer">
-                      <div class="ml-10 pt-3 text-2xl text-white w-12"> {{count}} </div> @if(player.tier == "Challenger")
-                      <div class="rounded-full h-16 w-16 items-center justify-center bg-yellow-500">
-                        <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{ "http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+ ".png"}} alt=""> </div>
-                      </div> @endif @if(player.tier == "Grandmaster")
-                      <div class="rounded-full h-16 w-16 items-center justify-center bg-pink-600">
-                        <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{ "http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+ ".png"}} alt=""> </div>
-                      </div> @endif @if(player.tier == "Master")
-                      <div class="rounded-full h-16 w-16 items-center justify-center bg-purple-500">
-                        <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{ "http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+ ".png"}} alt=""> </div>
-                      </div> @endif
-                      <div class="pt-2 pl-8 text-2xl text-white w-1/4 truncate"> {{player.name}} </div>
-                      <div class="ml-10 pt-4 text-lg text-white w-24"> {{player.lore}} </div>
-                      <div class="ml-8 pt-4 text-lg text-white w-32"> {{player.leaguePoints+" LP"}} </div>
-                      <div class="pt-4 text-lg text-white w-5 pt-2">W</div>
-                      <div class="ml-4 pt-4 text-lg text-white w-12 pt-2">{{player.wins}}</div>
-                      <div class="ml-6 pt-4 text-lg text-white w-5 pt-2">L</div>
-                      <div class="ml-4 pt-4 text-lg text-white w-12 pt-2">{{player.losses}}</div>
-                      <div class="ml-6 pt-4 text-lg text-white w-20 pt-2">WinRate</div>
-                      <div class="ml-4 pt-4 text-lg text-white w-8 pt-2">{{player.winrate}}</div>
-                      <div class="pt-4 text-lg text-white w-5 pt-2">%</div>
-                    </div>
-                  </div> @set("count",count+1) </a> @endeach </div>
-              <div class="hidden" id="tab-bottom"> @set("count",1) @each(player in LadderAdc)
-                <a href={{opggurl+player.name.split( ' ').join( '+')}} target="_blank">
-                  <div class="pt-6">
-                    <div class="h-24 py-4 bg-gray-700  flex rounded cursor-pointer">
-                      <div class="ml-10 pt-3 text-2xl text-white w-12"> {{count}} </div> @if(player.tier == "Challenger")
-                      <div class="rounded-full h-16 w-16 items-center justify-center bg-yellow-500">
-                        <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{ "http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+ ".png"}} alt=""> </div>
-                      </div> @endif @if(player.tier == "Grandmaster")
-                      <div class="rounded-full h-16 w-16 items-center justify-center bg-pink-600">
-                        <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{ "http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+ ".png"}} alt=""> </div>
-                      </div> @endif @if(player.tier == "Master")
-                      <div class="rounded-full h-16 w-16 items-center justify-center bg-purple-500">
-                        <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{ "http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+ ".png"}} alt=""> </div>
-                      </div> @endif
-                      <div class="pt-2 pl-8 text-2xl text-white w-1/4 truncate"> {{player.name}} </div>
-                      <div class="ml-10 pt-4 text-lg text-white w-24"> {{player.lore}} </div>
-                      <div class="ml-8 pt-4 text-lg text-white w-32"> {{player.leaguePoints+" LP"}} </div>
-                      <div class="pt-4 text-lg text-white w-5 pt-2">W</div>
-                      <div class="ml-4 pt-4 text-lg text-white w-12 pt-2">{{player.wins}}</div>
-                      <div class="ml-6 pt-4 text-lg text-white w-5 pt-2">L</div>
-                      <div class="ml-4 pt-4 text-lg text-white w-12 pt-2">{{player.losses}}</div>
-                      <div class="ml-6 pt-4 text-lg text-white w-20 pt-2">WinRate</div>
-                      <div class="ml-4 pt-4 text-lg text-white w-8 pt-2">{{player.winrate}}</div>
-                      <div class="pt-4 text-lg text-white w-5 pt-2">%</div>
-                    </div>
-                  </div> @set("count",count+1) </a> @endeach </div>
-              <div class="hidden" id="tab-support"> @set("count",1) @each(player in LadderSupport)
-                <a href={{opggurl+player.name.split( ' ').join( '+')}} target="_blank">
-                  <div class="pt-6">
-                    <div class="h-24 py-4 bg-gray-700  flex rounded cursor-pointer">
-                      <div class="ml-10 pt-3 text-2xl text-white w-12"> {{count}} </div> @if(player.tier == "Challenger")
-                      <div class="rounded-full h-16 w-16 items-center justify-center bg-yellow-500">
-                        <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{ "http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+ ".png"}} alt=""> </div>
-                      </div> @endif @if(player.tier == "Grandmaster")
-                      <div class="rounded-full h-16 w-16 items-center justify-center bg-pink-600">
-                        <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{ "http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+ ".png"}} alt=""> </div>
-                      </div> @endif @if(player.tier == "Master")
-                      <div class="rounded-full h-16 w-16 items-center justify-center bg-purple-500">
-                        <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{ "http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+ ".png"}} alt=""> </div>
-                      </div> @endif
-                      <div class="pt-2 pl-8 text-2xl text-white w-1/4 truncate"> {{player.name}} </div>
-                      <div class="ml-10 pt-4 text-lg text-white w-24"> {{player.lore}} </div>
-                      <div class="ml-8 pt-4 text-lg text-white w-32"> {{player.leaguePoints+" LP"}} </div>
-                      <div class="pt-4 text-lg text-white w-5 pt-2">W</div>
-                      <div class="ml-4 pt-4 text-lg text-white w-12 pt-2">{{player.wins}}</div>
-                      <div class="ml-6 pt-4 text-lg text-white w-5 pt-2">L</div>
-                      <div class="ml-4 pt-4 text-lg text-white w-12 pt-2">{{player.losses}}</div>
-                      <div class="ml-6 pt-4 text-lg text-white w-20 pt-2">WinRate</div>
-                      <div class="ml-4 pt-4 text-lg text-white w-8 pt-2">{{player.winrate}}</div>
-                      <div class="pt-4 text-lg text-white w-5 pt-2">%</div>
-                    </div>
-                  </div> @set("count",count+1) </a> @endeach </div>
-            </div>
-          </div>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Moss | OPGG</title>
+    <meta name="twitter:card" content="summary" /> 
+<meta name="twitter:site" content="@forestpopoon" /> 
+<meta property="og:url" content={{ "https://moss-adonis.herokuapp.com"+request.url() }} /> 
+<meta property="og:title" content="Moss" /> 
+<meta property="og:description" content="League of Legendsというゲームタイトルのデータを分析したサイトです。" />
+<meta property="og:image" content={{ "https://moss-adonis.herokuapp.com"+assetsUrl("/twittercard128x128.png") }} />
+    <link rel="icon" type="image/png" href={{ assetsUrl("/favicon-16x16.ico") }} sizes="16x16" />
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body class="bg-gray-900">
+    <header class="px-16 py-8">
+      <div class="bg-gray-700 shadow-sm h-16 rounded flex-wrap ">
+        <div class="flex px-5">
+          <a href="/">
+          <h1 class="text-2xl text-white py-3 flex"> 
+            <img class="pr-5 py-1" src={{ assetsUrl("/logoicon.png") }} alt="#">
+            Moss
+          </h1> 
+          </a>
+          <a class="text-xl text-white px-5 py-4">/</a>
+          <h2 class="text-lg text-white pt-5">OPGG</h2> <a class="text-xl text-white px-5 py-4">/</a> <a href="/opgg/JP1" class="text-lg text-white pt-5">Japan</a> <a class="text-xl text-white px-5 py-4">-</a> <a href="/opgg/KR" class="text-lg text-white pt-5">Korea</a> <a class="text-xl text-white px-5 py-4">-</a> <a href="/opgg/NA1" class="text-lg text-white pt-5">North America</a> </div>
         </div>
       </div>
+  </header>
+    <div class="px-16">
+        <div class="flex flex-wrap" id="tabs-id">
+            <div class="w-full">
+              <ul class="flex mb-0 list-none flex-wrap pt-3 pb-2 flex-row">
+                <li class="flex-auto text-center">
+                    <a class="text-xs font-bold px-5 py-3 shadow-lg rounded block text-white bg-teal-500 text-2xl mr-4 cursor-pointer" onclick="changeAtiveTab(event,'tab-all')">
+                       All
+                    </a>
+                </li>
+                <li class="flex-auto text-center">
+                  <a class="text-xs font-bold px-5 py-3 shadow-lg rounded block text-white bg-teal-900 text-2xl mr-4 cursor-pointer" onclick="changeAtiveTab(event,'tab-top')">
+                     Top
+                  </a>
+                </li>
+
+                <li class="flex-auto text-center">
+                    <a class="text-xs font-bold px-5 py-3 shadow-lg rounded block text-white bg-teal-900 text-2xl mr-4 cursor-pointer" onclick="changeAtiveTab(event,'tab-jungle')">
+                       Jungle
+                    </a>
+                </li>
+                <li class="flex-auto text-center">
+                    <a class="text-xs font-bold px-5 py-3 shadow-lg rounded block text-white bg-teal-900 text-2xl mr-4 cursor-pointer" onclick="changeAtiveTab(event,'tab-middle')">
+                       Middle
+                    </a>
+                </li>
+                <li class="flex-auto text-center">
+                    <a class="text-xs font-bold px-5 py-3 shadow-lg rounded block text-white bg-teal-900 text-2xl mr-4 cursor-pointer" onclick="changeAtiveTab(event,'tab-bottom')">
+                       Bottom
+                    </a>
+                </li>
+                <li class="flex-auto text-center">
+                    <a class="text-xs font-bold px-5 py-3 shadow-lg rounded block text-white bg-teal-900 text-2xl cursor-pointer" onclick="changeAtiveTab(event,'tab-support')">
+                       Support
+                    </a>
+                </li>
+              </ul>
+              <div class="relative flex flex-col min-w-0 break-words w-full mb-6 rounded px-64">
+                <div class="px-3 pr-16">
+                  <div class="tab-content tab-space">
+                    <div class="block" id="tab-all"> 
+                        @set("count",1)
+                         @each(player in LadderAll)
+                         <a href={{opggurl+player.name.split(' ').join('+')}} target="_blank">
+                          <div class="pt-6">
+                            <div class="h-24 py-4 bg-gray-700  flex rounded cursor-pointer">
+                              <div class="ml-10 pt-3 text-2xl text-white w-12"> {{count}} </div>
+                              @if(player.tier == "Challenger")
+                              <div class="rounded-full h-16 w-16 items-center justify-center bg-yellow-500">
+                                <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{"http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+".png"}} alt=""> </div>
+                              </div>
+                              @endif
+                              @if(player.tier == "Grandmaster")
+                              <div class="rounded-full h-16 w-16 items-center justify-center bg-pink-600">
+                                <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{"http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+".png"}} alt=""> </div>
+                              </div>
+                              @endif
+                              @if(player.tier == "Master")
+                              <div class="rounded-full h-16 w-16 items-center justify-center bg-purple-500">
+                                <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{"http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+".png"}} alt=""> </div>
+                              </div>
+                              @endif
+
+                              <div class="pt-2 pl-8 text-2xl text-white w-1/4 truncate"> {{player.name}} </div>
+                              <div class="ml-10 pt-4 text-lg text-white w-24"> {{player.lore}} </div>
+                              <div class="ml-8 pt-4 text-lg text-white w-32"> {{player.leaguePoints+" LP"}} </div>
+                              <div class="pt-4 text-lg text-white w-5 pt-2">W</div>
+                              <div class="ml-4 pt-4 text-lg text-white w-12 pt-2">{{player.wins}}</div>
+                              <div class="ml-6 pt-4 text-lg text-white w-5 pt-2">L</div>
+                              <div class="ml-4 pt-4 text-lg text-white w-12 pt-2">{{player.losses}}</div>
+                              <div class="ml-6 pt-4 text-lg text-white w-20 pt-2">WinRate</div>
+                              <div class="ml-4 pt-4 text-lg text-white w-8 pt-2">{{player.winrate}}</div>
+                              <div class="pt-4 text-lg text-white w-5 pt-2">%</div>
+                            </div>
+                          </div>
+                          @set("count",count+1)
+                        </a>
+                        @endeach
+                    </div>
+                    <div class="hidden" id="tab-top">
+                      @set("count",1)
+                      @each(player in LadderTop)
+                      <a href={{opggurl+player.name.split(' ').join('+')}} target="_blank">
+                       <div class="pt-6">
+                         <div class="h-24 py-4 bg-gray-700  flex rounded cursor-pointer">
+                           <div class="ml-10 pt-3 text-2xl text-white w-12"> {{count}} </div>
+                           @if(player.tier == "Challenger")
+                           <div class="rounded-full h-16 w-16 items-center justify-center bg-yellow-500">
+                             <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{"http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+".png"}} alt=""> </div>
+                           </div>
+                           @endif
+                           @if(player.tier == "Grandmaster")
+                           <div class="rounded-full h-16 w-16 items-center justify-center bg-pink-600">
+                             <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{"http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+".png"}} alt=""> </div>
+                           </div>
+                           @endif
+                           @if(player.tier == "Master")
+                           <div class="rounded-full h-16 w-16 items-center justify-center bg-purple-500">
+                             <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{"http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+".png"}} alt=""> </div>
+                           </div>
+                           @endif
+
+                           <div class="pt-2 pl-8 text-2xl text-white w-1/4 truncate"> {{player.name}} </div>
+                           <div class="ml-10 pt-4 text-lg text-white w-24"> {{player.lore}} </div>
+                           <div class="ml-8 pt-4 text-lg text-white w-32"> {{player.leaguePoints+" LP"}} </div>
+                           <div class="pt-4 text-lg text-white w-5 pt-2">W</div>
+                           <div class="ml-4 pt-4 text-lg text-white w-12 pt-2">{{player.wins}}</div>
+                           <div class="ml-6 pt-4 text-lg text-white w-5 pt-2">L</div>
+                           <div class="ml-4 pt-4 text-lg text-white w-12 pt-2">{{player.losses}}</div>
+                           <div class="ml-6 pt-4 text-lg text-white w-20 pt-2">WinRate</div>
+                           <div class="ml-4 pt-4 text-lg text-white w-8 pt-2">{{player.winrate}}</div>
+                           <div class="pt-4 text-lg text-white w-5 pt-2">%</div>
+                         </div>
+                       </div>
+                       @set("count",count+1)
+                     </a>
+                     @endeach
+                    </div>
+                    <div class="hidden" id="tab-jungle">
+                      @set("count",1)
+                      @each(player in LadderJungle)
+                      <a href={{opggurl+player.name.split(' ').join('+')}} target="_blank">
+                       <div class="pt-6">
+                         <div class="h-24 py-4 bg-gray-700  flex rounded cursor-pointer">
+                           <div class="ml-10 pt-3 text-2xl text-white w-12"> {{count}} </div>
+                           @if(player.tier == "Challenger")
+                           <div class="rounded-full h-16 w-16 items-center justify-center bg-yellow-500">
+                             <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{"http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+".png"}} alt=""> </div>
+                           </div>
+                           @endif
+                           @if(player.tier == "Grandmaster")
+                           <div class="rounded-full h-16 w-16 items-center justify-center bg-pink-600">
+                             <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{"http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+".png"}} alt=""> </div>
+                           </div>
+                           @endif
+                           @if(player.tier == "Master")
+                           <div class="rounded-full h-16 w-16 items-center justify-center bg-purple-500">
+                             <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{"http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+".png"}} alt=""> </div>
+                           </div>
+                           @endif
+
+                           <div class="pt-2 pl-8 text-2xl text-white w-1/4 truncate"> {{player.name}} </div>
+                           <div class="ml-10 pt-4 text-lg text-white w-24"> {{player.lore}} </div>
+                           <div class="ml-8 pt-4 text-lg text-white w-32"> {{player.leaguePoints+" LP"}} </div>
+                           <div class="pt-4 text-lg text-white w-5 pt-2">W</div>
+                           <div class="ml-4 pt-4 text-lg text-white w-12 pt-2">{{player.wins}}</div>
+                           <div class="ml-6 pt-4 text-lg text-white w-5 pt-2">L</div>
+                           <div class="ml-4 pt-4 text-lg text-white w-12 pt-2">{{player.losses}}</div>
+                           <div class="ml-6 pt-4 text-lg text-white w-20 pt-2">WinRate</div>
+                           <div class="ml-4 pt-4 text-lg text-white w-8 pt-2">{{player.winrate}}</div>
+                           <div class="pt-4 text-lg text-white w-5 pt-2">%</div>
+                         </div>
+                       </div>
+                       @set("count",count+1)
+                     </a>
+                     @endeach
+                    </div>
+                    <div class="hidden" id="tab-middle">
+                      @set("count",1)
+                      @each(player in LadderMid)
+                      <a href={{opggurl+player.name.split(' ').join('+')}} target="_blank">
+                       <div class="pt-6">
+                         <div class="h-24 py-4 bg-gray-700  flex rounded cursor-pointer">
+                           <div class="ml-10 pt-3 text-2xl text-white w-12"> {{count}} </div>
+                           @if(player.tier == "Challenger")
+                           <div class="rounded-full h-16 w-16 items-center justify-center bg-yellow-500">
+                             <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{"http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+".png"}} alt=""> </div>
+                           </div>
+                           @endif
+                           @if(player.tier == "Grandmaster")
+                           <div class="rounded-full h-16 w-16 items-center justify-center bg-pink-600">
+                             <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{"http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+".png"}} alt=""> </div>
+                           </div>
+                           @endif
+                           @if(player.tier == "Master")
+                           <div class="rounded-full h-16 w-16 items-center justify-center bg-purple-500">
+                             <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{"http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+".png"}} alt=""> </div>
+                           </div>
+                           @endif
+
+                           <div class="pt-2 pl-8 text-2xl text-white w-1/4 truncate"> {{player.name}} </div>
+                           <div class="ml-10 pt-4 text-lg text-white w-24"> {{player.lore}} </div>
+                           <div class="ml-8 pt-4 text-lg text-white w-32"> {{player.leaguePoints+" LP"}} </div>
+                           <div class="pt-4 text-lg text-white w-5 pt-2">W</div>
+                           <div class="ml-4 pt-4 text-lg text-white w-12 pt-2">{{player.wins}}</div>
+                           <div class="ml-6 pt-4 text-lg text-white w-5 pt-2">L</div>
+                           <div class="ml-4 pt-4 text-lg text-white w-12 pt-2">{{player.losses}}</div>
+                           <div class="ml-6 pt-4 text-lg text-white w-20 pt-2">WinRate</div>
+                           <div class="ml-4 pt-4 text-lg text-white w-8 pt-2">{{player.winrate}}</div>
+                           <div class="pt-4 text-lg text-white w-5 pt-2">%</div>
+                         </div>
+                       </div>
+                       @set("count",count+1)
+                     </a>
+                     @endeach
+                    </div>
+                    <div class="hidden" id="tab-bottom">
+                      @set("count",1)
+                      @each(player in LadderAdc)
+                      <a href={{opggurl+player.name.split(' ').join('+')}} target="_blank">
+                       <div class="pt-6">
+                         <div class="h-24 py-4 bg-gray-700  flex rounded cursor-pointer">
+                           <div class="ml-10 pt-3 text-2xl text-white w-12"> {{count}} </div>
+                           @if(player.tier == "Challenger")
+                           <div class="rounded-full h-16 w-16 items-center justify-center bg-yellow-500">
+                             <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{"http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+".png"}} alt=""> </div>
+                           </div>
+                           @endif
+                           @if(player.tier == "Grandmaster")
+                           <div class="rounded-full h-16 w-16 items-center justify-center bg-pink-600">
+                             <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{"http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+".png"}} alt=""> </div>
+                           </div>
+                           @endif
+                           @if(player.tier == "Master")
+                           <div class="rounded-full h-16 w-16 items-center justify-center bg-purple-500">
+                             <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{"http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+".png"}} alt=""> </div>
+                           </div>
+                           @endif
+
+                           <div class="pt-2 pl-8 text-2xl text-white w-1/4 truncate"> {{player.name}} </div>
+                           <div class="ml-10 pt-4 text-lg text-white w-24"> {{player.lore}} </div>
+                           <div class="ml-8 pt-4 text-lg text-white w-32"> {{player.leaguePoints+" LP"}} </div>
+                           <div class="pt-4 text-lg text-white w-5 pt-2">W</div>
+                           <div class="ml-4 pt-4 text-lg text-white w-12 pt-2">{{player.wins}}</div>
+                           <div class="ml-6 pt-4 text-lg text-white w-5 pt-2">L</div>
+                           <div class="ml-4 pt-4 text-lg text-white w-12 pt-2">{{player.losses}}</div>
+                           <div class="ml-6 pt-4 text-lg text-white w-20 pt-2">WinRate</div>
+                           <div class="ml-4 pt-4 text-lg text-white w-8 pt-2">{{player.winrate}}</div>
+                           <div class="pt-4 text-lg text-white w-5 pt-2">%</div>
+                         </div>
+                       </div>
+                       @set("count",count+1)
+                     </a>
+                     @endeach
+                    </div>
+                    <div class="hidden" id="tab-support">
+                      @set("count",1)
+                      @each(player in LadderSupport)
+                      <a href={{opggurl+player.name.split(' ').join('+')}} target="_blank">
+                       <div class="pt-6">
+                         <div class="h-24 py-4 bg-gray-700  flex rounded cursor-pointer">
+                           <div class="ml-10 pt-3 text-2xl text-white w-12"> {{count}} </div>
+                           @if(player.tier == "Challenger")
+                           <div class="rounded-full h-16 w-16 items-center justify-center bg-yellow-500">
+                             <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{"http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+".png"}} alt=""> </div>
+                           </div>
+                           @endif
+                           @if(player.tier == "Grandmaster")
+                           <div class="rounded-full h-16 w-16 items-center justify-center bg-pink-600">
+                             <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{"http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+".png"}} alt=""> </div>
+                           </div>
+                           @endif
+                           @if(player.tier == "Master")
+                           <div class="rounded-full h-16 w-16 items-center justify-center bg-purple-500">
+                             <div class="rounded-full h-12 w-12 items-center justify-center bg-gray-300 overflow-hidden m-2"> <img src={{"http://ddragon.leagueoflegends.com/cdn/10.10.5/img/profileicon/"+player.iconid+".png"}} alt=""> </div>
+                           </div>
+                           @endif
+
+                           <div class="pt-2 pl-8 text-2xl text-white w-1/4 truncate"> {{player.name}} </div>
+                           <div class="ml-10 pt-4 text-lg text-white w-24"> {{player.lore}} </div>
+                           <div class="ml-8 pt-4 text-lg text-white w-32"> {{player.leaguePoints+" LP"}} </div>
+                           <div class="pt-4 text-lg text-white w-5 pt-2">W</div>
+                           <div class="ml-4 pt-4 text-lg text-white w-12 pt-2">{{player.wins}}</div>
+                           <div class="ml-6 pt-4 text-lg text-white w-5 pt-2">L</div>
+                           <div class="ml-4 pt-4 text-lg text-white w-12 pt-2">{{player.losses}}</div>
+                           <div class="ml-6 pt-4 text-lg text-white w-20 pt-2">WinRate</div>
+                           <div class="ml-4 pt-4 text-lg text-white w-8 pt-2">{{player.winrate}}</div>
+                           <div class="pt-4 text-lg text-white w-5 pt-2">%</div>
+                         </div>
+                       </div>
+                       @set("count",count+1)
+                     </a>
+                     @endeach
+                    </div>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
     </div>
-  </div>
-  <script type="text/javascript">
-    function changeAtiveTab(event,tabID){
+    <script type="text/javascript">
+        function changeAtiveTab(event,tabID){
           let element = event.target;
           while(element.nodeName !== "A"){
             element = element.parentNode;
@@ -242,5 +329,9 @@
           document.getElementById(tabID).classList.remove("hidden");
           document.getElementById(tabID).classList.add("block");
         }
-  </script> 　 </body>
+      </script>
+
+   　
+
+  </body>
 </html>
