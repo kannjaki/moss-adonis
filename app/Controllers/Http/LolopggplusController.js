@@ -141,7 +141,7 @@ class LolopggplusController {
         if (ladder == null) {
           ladder = {};
         }
-        if(body.entries == null){//null
+        if(!body.hasOwnProperty('entries')){//null
           console.log("[Server:Error] Can't do addLadder("+league+","+country+") Body =>"+body)
           resolve("addLadder"); 
           return;
