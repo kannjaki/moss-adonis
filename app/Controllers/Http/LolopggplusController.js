@@ -200,7 +200,7 @@ class LolopggplusController {
         ladder["SUPPORT"] = await SUPPORT;
         ladder["ALL"] = await ALL;
         ladders.set(country, ladder);
-        console.log("[Server] add Ladder("+league+","+country)
+        console.log("\u001b[32m[Server] add Ladder("+league+","+country+")")
         resolve("addLadder");
       })
     });
@@ -222,7 +222,7 @@ class LolopggplusController {
         ladders.set(leaguename[0], leagueladder)
       }
       var date = new Date();
-      console.log("[Server: " + date.toLocaleString("ja") + " ] Updated OPGG+");
+      console.log("\u001b[32m[Server: " + date.toLocaleString("ja") + " ] Updated OPGG+");
       resolve('Sort');
     });
   }
