@@ -41,7 +41,7 @@ class LolopggplusController {
     await this.addLadder("Challenger", "NA1");
     await this.addLadder("Grandmaster", "NA1");
     await this.addLadder("Challenger", "KR");
-    await this.addLadder("Grandmaste", "KR");
+    await this.addLadder("Grandmaster", "KR");
     await this.sortAll();
   }
   static async getLore(accountId, country) {
