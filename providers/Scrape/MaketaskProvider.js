@@ -17,6 +17,8 @@ class MaketaskProvider extends ServiceProvider {
     DataInfo.get();
     const Scheduler = use('Adonis/Addons/Scheduler') //Why do this use it...
     Scheduler.run()
+    const opgg = use('App/Controllers/Http/LolopggplusController');
+    opgg.run();
   }
 
   /**
