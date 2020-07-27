@@ -11,6 +11,9 @@ class LolopggplusController {
     view,
     params
   }) {
+     if(params.id == "riot.text"){
+      return view.render("riot")
+    }
     var ladder = await ladders.get(params.id);
     if (ladder == null) {
       return view.render("opggplus")
