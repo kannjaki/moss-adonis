@@ -4,7 +4,7 @@ var sl = require('await-sleep');
 var ladders = new Map();
 var count = 0;
 var headers = {
-  "X-Riot-Token": "RGAPI-c544491d-7f22-4a89-ad58-cbdcaca3a34a"
+  "X-Riot-Token": "RGAPI-33eff8c9-a2a7-4051-b834-210202b9c8f3"
 }
 class LolopggplusController {
   async showLadder({
