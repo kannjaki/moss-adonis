@@ -28,7 +28,7 @@ class DataInfo extends Task {
 	async handle() {
 		for (const content of contentList) {
 			newcontent.set(content.name, []);
-			await this.updateMildom(content)
+			//await this.updateMildom(content)
 			await this.updateTwitch(content)
 			await this.SortStreamlist(content);
 			streams.set(content.name,newcontent.get(content.name));
