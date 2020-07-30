@@ -44,7 +44,7 @@ class DataInfo extends Task {
 				var streamlist = newcontent.get(content.name);
 				
 				const browser = await puppeteer.launch({
-					headless: true,args: ['--no-sandbox']
+					headless: true,args: ['--disable-dev-shm-usage']
         });
 
 				const page = await browser.newPage();
