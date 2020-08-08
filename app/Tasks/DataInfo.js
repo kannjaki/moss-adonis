@@ -32,56 +32,51 @@ class DataInfo extends Task {
 			await this.updateTwitch(content)
 			await this.SortStreamlist(content);
 			streams.set(content.name,newcontent.get(content.name));
-    }
-    var date = new Date();
-    console.log("[Server: "+date.toLocaleString("ja")+" ] Updated contents");
+ 	    }
+    //var date = new Date();
+    //console.log("[Server: "+date.toLocaleString("ja")+" ] Updated contents");
 	}
 
 
 	async updateMildom(content) {
 		return new Promise(function(resolve, reject) {
 			(async() => {
+				try {
 				var streamlist = newcontent.get(content.name);
 				
-				const browser = await puppeteer.launch({
-					headless: true,args: [
-    '--no-sandbox',
-    '--disable-setuid-sandbox',
-  ]
-        });
+				const browser = await puppeteer.launch({headless: true});
 
 				const page = await browser.newPage();
 
-				// Emulates an iPhone X
+				// PC Chrome
 				await page.setUserAgent(
 					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36"
-        );
+        			);
 
 				await page.setViewport({
 					width: 1920,
 					height: 969
 				});
-
-				await page.goto('https://www.mildom.com/channel_detail?channel_key=' +
+				//
+				await page.goto('https://www.mildom.com/channel/' +
 					content.mildom);
 
-				await page.waitForSelector('.infinite-load__container');
-				let html = await page.evaluate(() => document.body.innerHTML);
-
-				//stream list 
-				const items = await page.$$('.live-item')
-				for await (const item of items) {
-
-					const sname = await (await (await item.$(
-						'div.live-item__main-nickname')).getProperty('textContent')).jsonValue();
-					const sintro = await (await (await item.$('div.live-item__main-intro'))
-						.getProperty('textContent')).jsonValue();
-					const surl = await (await (await item.$('a.live-item__real-container'))
-						.getProperty('href')).jsonValue();
-					const simg = await (await (await item.$('img')).getProperty('src')).jsonValue();
-					const sview = await (await (await item.$('div.live-item__viewer-num'))
-						.getProperty('textContent')).jsonValue();
-
+					await page.waitForSelector('.card-sc-14ndxdd-0');
+					let html = await page.evaluate(() => document.body.innerHTML);
+				  
+					//stream list 
+					const items = await page.$$('.card-sc-14ndxdd-0')
+					var streamlist = [];
+					for (const item of items) {
+					  const sname = await (await (await item.$('div.name')).getProperty('textContent')).jsonValue();
+					  const sintro = await (await (await item.$('div.title'))
+					  .getProperty('textContent')).jsonValue();
+					const surl = await (await item.getProperty('href')).jsonValue();
+					const simg = await (await (await item.$('div.cover')).getProperty('style')).jsonValue();
+					console.log(simg)
+					const sview = await (await (await item.$('div.viewer'))
+					  .getProperty('textContent')).jsonValue();
+				  
 					var addStream = {
 						platform: "Mildom",
 						intro: sintro,
@@ -97,7 +92,11 @@ class DataInfo extends Task {
 				newcontent.set(content.name, streamlist);
 				//console.log(content.name+" add content on Mildom");
 				resolve('addMildom');
-
+			} catch (e) {
+				process.setMaxListeners(0);
+				console.error("[Server Error]"+e);
+				resolve('errorMildom');
+			}
 			})()
 		});
 	}
@@ -128,6 +127,7 @@ class DataInfo extends Task {
 
 			//リクエスト送信
 			request(options, function(error, response, body) {
+				try {
 				//コールバックで色々な処理
 				body.streams.forEach(function(stream) {
 					var addStream = {
@@ -143,8 +143,14 @@ class DataInfo extends Task {
 				newcontent.set(content.name, streamlist);
 				//console.log(content.name+" add content on Twich");
 				resolve('addTwich');
+				} catch (e) {
+				process.setMaxListeners(0);
+				console.error("[Server Error]"+e);
+				resolve('addTwich');
+				}
 			})
 		});
+		
 	}
 	async SortStreamlist(content) {
 		return new Promise(function(resolve, reject) {
