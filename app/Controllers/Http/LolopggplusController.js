@@ -4,14 +4,14 @@ var sl = require('await-sleep');
 var ladders = new Map();
 var count = 0;
 var headers = {
-  "X-Riot-Token": "RGAPI-e90a8d5f-ede8-4146-95a9-658178c326fb"
+  "X-Riot-Token": "RGAPI-b6361e15-95f7-4423-a4da-e334853a79b8"
 }
 class LolopggplusController {
   async showLadder({
     view,
     params
   }) {
-     if(params.id == "riot.text"){
+     if(params.id == "riot.txt"){
       return view.render("riot")
     }
     var ladder = await ladders.get(params.id);
